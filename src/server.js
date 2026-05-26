@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import pool from './models/db.js';
-import { getAllTodos, createATodo, changingTheTitle, completedATask } from './models/todoModel.js';
+import { getAllTodos, createATodo, changingTheTitle, completedATask, deleteATask } from './models/todoModel.js';
 const app = express();
 const PORT = process.env.PORT;
 app.use(express.json());
@@ -12,17 +12,24 @@ app.get('/', async (req, res) => {
     //console.log(allTodos);
 
     //Testing code
-    //console.log("After creating a new todo");
-    //const createTodo = await createATodo('test todo 2', 1);
-    //console.log(allTodos);
+    /*
+    console.log("After creating a new todo");
+    const createTodo = await createATodo('test todo 2', 1);
+    console.log(allTodos);
+    */
 
     //Testing updating function
-
+    /*
     const titleChange = await changingTheTitle("To do changed again", 3);
     console.log(titleChange);
 
     const taskCompleted = await completedATask(3);
     console.log(taskCompleted);
+    */
+
+    //Testing deleting function
+    //const deleteTask = await deleteATask(5);
+    //console.log(allTodos);
 });
 
 app.listen(PORT, () => {

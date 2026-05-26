@@ -35,3 +35,12 @@ export const completedATask = async(id) =>{
         throw error;
     }
 };
+
+export const deleteATask = async (id) => {
+    try{
+        const taskDeleted = await pool.query('DELETE FROM todos WHERE id = $1', [id]);
+        return taskDeleted;
+    } catch (error){
+        throw error;
+    }
+};
