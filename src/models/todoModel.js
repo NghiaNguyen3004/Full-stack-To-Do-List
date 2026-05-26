@@ -2,7 +2,7 @@ import pool from './db.js';
 
 export const getAllTodos = async (userID) =>{
     try {
-        const getAllTodo = await pool.query('SELECT todos.*, users.gmail FROM todos JOIN users ON users.userid = todos.user_id WHERE user_id = $1 ORDER BY todos.created_at DESC', [userID]);
+        const getAllTodo = await pool.query('SELECT todos.*, users.email FROM todos JOIN users ON users.userid = todos.user_id WHERE user_id = $1 ORDER BY todos.created_at DESC', [userID]);
         return (getAllTodo.rows);
     } catch(error){
         throw error;
