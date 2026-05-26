@@ -11,7 +11,7 @@ export const getAllTodos = async (userID) =>{
 
 export const createATodo = async(title, userID) => {
     try{
-        const createATodo = await pool.query('INSERT INTO todos(user_id, title) values ($1, $2) RETURNING * ', [title, userID]);
+        const createATodo = await pool.query('INSERT INTO todos(user_id, title) values ($1, $2) RETURNING * ', [userID, title]);
         return (createATodo.rows[0]);
     } catch(error){
         throw error;
