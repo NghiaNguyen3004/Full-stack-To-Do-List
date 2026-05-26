@@ -3,9 +3,11 @@ import express from 'express';
 import pool from './models/db.js';
 import { getAllTodos, createATodo, changingTheTitle, completedATask, deleteATask } from './models/todoModel.js';
 import { createUser, getUserByEmail } from './models/userModel.js';
+import router from './routes/authRoutes.js';
 const app = express();
 const PORT = process.env.PORT;
 app.use(express.json());
+app.use('/auth', router);
 
 app.get('/', async (req, res) => {
     //res.json({ status: 'OK' });
@@ -43,6 +45,8 @@ app.get('/', async (req, res) => {
     const getUser2Email = await getUserByEmail('abcd@gmail.com');
     console.log(getUser2Email);
     */
+
+
 });
 
 app.listen(PORT, () => {
