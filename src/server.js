@@ -9,7 +9,7 @@ app.use(express.json());
 app.get('/', async (req, res) => {
     //res.json({ status: 'OK' });
     const allTodos = await getAllTodos(1);
-    //console.log(allTodos);
+    console.log(allTodos);
 
     //Testing code
     /*
