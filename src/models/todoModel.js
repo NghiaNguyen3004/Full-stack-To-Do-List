@@ -17,3 +17,21 @@ export const createATodo = async(title, userID) => {
         throw error;
     }
 };
+
+
+export const changingTheTitle = async(title, id) =>{
+    try{
+        const changeTheTitle = await pool.query('UPDATE todos SET title = $1 WHERE id = $2 RETURNING *', [title, id]);
+        return (changeTheTitle.rows[0]);
+    } catch (error){
+        throw error;
+    }
+};
+export const completedATask = async(id) =>{
+    try{
+        const taskCompleted = await pool.query('UPDATE todos SET completed = $1 WHERE id = $2 RETURNING *', [true, id]);
+        return (taskCompleted.rows[0]);
+    } catch (error){
+        throw error;
+    }
+};
