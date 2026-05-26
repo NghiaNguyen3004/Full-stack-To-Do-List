@@ -6,9 +6,9 @@ const app = express();
 const PORT = process.env.PORT;
 app.use(express.json());
 
-app.get('/health', (req, res) => {
-    res.json({ status: 'OK' });
-    const allTodos = getAllTodos();
+app.get('/', async (req, res) => {
+    //res.json({ status: 'OK' });
+    const allTodos = await getAllTodos(1);
     console.log(allTodos);
 });
 
