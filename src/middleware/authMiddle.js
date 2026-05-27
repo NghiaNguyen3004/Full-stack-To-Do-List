@@ -10,7 +10,7 @@ export const requireAuth = (req, res, next) => {
     const token = authHeader.split(' ')[1];
     try {
         const decoded = jwt.verify(token,JWT_SECRET);
-        console.log('Decoded token:', decoded);
+        //console.log('Decoded token:', decoded);
         req.userid = decoded.userid;
         next();
     } catch (error) {
