@@ -21,7 +21,7 @@ export const createATodo = async(title, userID) => {
 
 export const changingTheTitle = async(title, id) =>{
     try{
-        const changeTheTitle = await pool.query('UPDATE todos SET title = $1 WHERE user_id = $2 RETURNING *', [title, id]);
+        const changeTheTitle = await pool.query('UPDATE todos SET title = $1 WHERE id = $2 RETURNING *', [title, id]);
         return (changeTheTitle.rows[0]);
     } catch (error){
         throw error;
@@ -29,7 +29,7 @@ export const changingTheTitle = async(title, id) =>{
 };
 export const completedATask = async(id) =>{
     try{
-        const taskCompleted = await pool.query('UPDATE todos SET completed = $1 WHERE user_id = $2 RETURNING *', [true, id]);
+        const taskCompleted = await pool.query('UPDATE todos SET completed = $1 WHERE id = $2 RETURNING *', [true, id]);
         return (taskCompleted.rows[0]);
     } catch (error){
         throw error;
@@ -38,7 +38,7 @@ export const completedATask = async(id) =>{
 
 export const deleteATask = async (id) => {
     try{
-        const taskDeleted = await pool.query('DELETE FROM todos WHERE user_id = $1', [id]);
+        const taskDeleted = await pool.query('DELETE FROM todos WHERE id = $1', [id]);
         return taskDeleted;
     } catch (error){
         throw error;
