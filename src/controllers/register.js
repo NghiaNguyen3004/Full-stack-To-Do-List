@@ -1,8 +1,12 @@
 import {getUserByEmail, createUser} from '../models/userModel.js';
-
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+const saltRounds = 10;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const register = async (req, res) => {
     const { name, email, password } = req.body;
+
     try{
         //Check if the fields is empty
         if (!name || !email || !password){
@@ -15,8 +19,10 @@ export const register = async (req, res) => {
         if (getUser){
             return res.status(409).json({error: 'Email already exists' });
         } else{
-            const newUser = await createUser(name, email, password);
-            res.status(201).json({ message: 'User created successfully', user: newUser });
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            const newUser = await createUser(name, email, hashedPassword);
+            const token = jwt.sign({ userID: newUser.userid }, JWT_SECRET, { expiresIn: '1h' });
+            res.status(201).json({ message: 'User created successfully', token });
         }
         
     } catch(error){

@@ -11,7 +11,7 @@ export const createUser = async(name, email, password) =>{
 
 export const getUserByEmail = async(email) => {
     try{
-        const userByEmail = await pool.query("SELECT name, email, password FROM users WHERE email = $1", [email]);
+        const userByEmail = await pool.query("SELECT name, email FROM users WHERE email = $1", [email]);
         return userByEmail.rows[0];
     } catch(error){
         throw error;
