@@ -4,6 +4,7 @@ import pool from './models/db.js';
 import { getAllTodos, createATodo, changingTheTitle, completedATask, deleteATask } from './models/todoModel.js';
 import { createUser, getUserByEmail } from './models/userModel.js';
 import router from './routes/authRoutes.js';
+import { requireAuth } from './middleware/authMiddle.js';
 const app = express();
 const PORT = process.env.PORT;
 app.use(express.json());
@@ -48,6 +49,7 @@ app.get('/', async (req, res) => {
 
 
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
