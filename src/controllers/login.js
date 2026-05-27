@@ -14,6 +14,7 @@ export const login = async (req, res) => {
             return res.status(400).json({error: 'Invalid email format'});
         } else{
             const getUser = await getUserByEmail(email);
+            console.log('getUser in login controller:', getUser);
             if (!getUser){
                 return res.status(404).json({error: 'User not found'});
             } else{
