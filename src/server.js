@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-    origin: ['full-stack-to-do-list-delta.vercel.app', 'http://localhost:5173'], // Allow requests from the frontend URL and localhost for development
+    origin: ['https://full-stack-to-do-list-delta.vercel.app', 'http://localhost:5173'], // Allow requests from the frontend URL and localhost for development
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true, // Allow cookies to be sent with requests
 }));
