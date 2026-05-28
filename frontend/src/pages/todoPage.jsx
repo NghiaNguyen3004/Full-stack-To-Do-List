@@ -1,11 +1,12 @@
 import {useState, useEffect} from 'react';
-import {getAllTodos, createTodo} from '../services/api.js';
+import {getAllTodos, createTodo, deleteTodo} from '../services/api.js';
 import {useAuth} from '../context/authContext.jsx';
 import ToDoItem from '../components/todoItem.jsx';
+import { FormItem } from '../components/formItem.jsx';
+import '../styles/todosPage.css';
 const ToDoPage = ()=>{
     const {token} = useAuth();
     const [todos, settodos] = useState([]);
-    const [newToDo, setNewToDo] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     useEffect(()=>{
@@ -23,39 +24,61 @@ const ToDoPage = ()=>{
         fetchToDos();
     }, [token]);
 
-    const handleSubmit = async (e)=>{
-        e.preventDefault();
+    const handleSubmit = async (title)=>{
         // Logic to add new ToDo
         try{
-            const newTodo = await createTodo(newToDo, token);
+            const newTodo = await createTodo(title, token);
             settodos([...todos, newTodo]);
         } catch(err){
             setError('Failed to create ToDo');
-        } finally{
-            setNewToDo('');
+        }
+    }
+
+    const handleDelete = async (id) =>{
+        // Logic to delete ToDo
+        try{
+            await deleteTodo(id, token);
+            settodos(todos.filter(todo => todo.id !== id));
+
+        } catch(err){
+            setError('Failed to delete ToDo');
         }
     }
     return(
-        <div>
-            <h1>ToDo List</h1>
-            {loading && <p>Loading...</p>}
-            {error && <p style={{color: 'red'}}>{error}</p>}
+        <div className="todos-page">
+            <nav className="todos-navbar">
+                <span className="navbar-brand">To-do app</span>
+                    <div className="navbar-right">
+                        <span className="navbar-user">hello, {name}</span>
+                        {/* <button className="logout-btn" onClick={logout}>Logout</button> */}
+                    </div>
+            </nav>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={newToDo}
-                    onChange={(e) => setNewToDo(e.target.value)}
-                    placeholder="What you need to do?"
-                />
-                <button type="submit">Add</button>
-            </form>
-            <ul>
-                {todos.map((todo) => (
-                    <ToDoItem key={todo.id} todo={todo} onComplete={()=>{}} onDelete={()=>{}}/>
-                ))}
-            </ul>
+    <main className="todos-main">
+        <div className="todos-header">
+            <span className="todos-badge">My tasks</span>
+            <h1 className="todos-title">What's on your plate</h1>
+            <p className="todos-count">{todos.length} tasks total</p>
         </div>
+
+    <FormItem onSubmit={handleSubmit} />  {/* add classes inside FormItem */}
+
+        <div className="todos-divider">
+            <span className="divider-label">Tasks</span>
+            <div className="divider-line"></div>
+        </div>
+
+    {loading && <p className="todos-loading">Fetching tasks...</p>}
+    {error && <p className="todos-error">{error}</p>}
+    {todos.length === 0 && !loading && <p className="todos-empty">No tasks yet — add one above</p>}
+
+    <ul className="todos-list">
+      {todos.map(todo => (
+        <ToDoItem key={todo.id} todo={todo} onDelete={handleDelete} />
+      ))}
+    </ul>
+  </main>
+</div>
     )
 }
 

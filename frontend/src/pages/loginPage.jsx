@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useAuth} from '../context/authContext.jsx'
 import { loginUser} from '../services/api.js'
+import { LoginForm } from '../components/loginForm.jsx'
 
 
 const LoginPage = () => {
@@ -20,8 +21,7 @@ const LoginPage = () => {
         setPassword(e.target.value)
     }
 
-    const handleSubmit = async (e) =>{
-        e.preventDefault();
+    const handleSubmit = async (email, password) =>{
         setLoading(true)
         try{
             const {token} = await loginUser(email, password);
@@ -35,15 +35,23 @@ const LoginPage = () => {
     }
 
     return (
-        <div>
-            <form onSubmit= {handleSubmit}>
-                <input type = 'email' value = {email} onChange ={handleEmailInput}></input>
-                <input type = 'password' value = {password} onChange={handlePassword}></input>
-                <button disabled={loading} >{loading? "Logging in ...": "Login"}</button>
-            </form>
-            
+        <div className="login-page">
+            <div className="login-container">
+                <div className="login-header">
+                    <span className="login-badge">To-do app</span>
+                    <h1 className="login-title">Welcome back</h1>
+                    <p className="login-subtitle">Sign in to continue</p>
+                </div>
+                <div className="login-card">
+                    <LoginForm onSubmit={handleSubmit} />
+                </div>
+
+                 <p className="login-footer">
+                    No account? <a href="/register">Register</a>
+                </p>
+            </div>
+           
         </div>
-        
     )
 
 }

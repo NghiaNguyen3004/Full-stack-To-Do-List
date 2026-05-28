@@ -1,13 +1,23 @@
-import '../App.css';
+import '../styles/todosPage.css';
 
 export default function ToDoItem({todo, onComplete, onDelete}){
     return (
-        <div className="card">
+        <li className={`todo-item ${todo.completed ? 'completed' : ''}`}>
+            
+            <div 
+                className={`todo-checkbox ${todo.completed ? 'checked' : ''}`}
+                onClick={() => onComplete(todo.id)}
+            />
             <span className="todo-title">{todo.title}</span>
             <div className="todo-actions">
-                <button onClick={() => onComplete(todo.id)}>Complete</button>
-                <button onClick={() => onDelete(todo.id)}>Delete</button>
+                <button 
+                    className="todo-action-btn delete" 
+                    onClick={() => onDelete(todo.id)}
+                >
+                    delete
+                </button>
             </div>
-        </div>
+
+        </li>
     );
 }

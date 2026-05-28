@@ -14,7 +14,6 @@ export const registerUser = async (name, email, password) => {
     return await registerResponse.json();
 };
 
-
 export const loginUser = async (email, password) => {
     const loginResponse = await fetch(`${SERVER_URL}/auth/login`, {
         method:'POST',
