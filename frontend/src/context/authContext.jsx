@@ -3,13 +3,14 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
     const [token, setToken] = useState(null);
+    const [name, setName] = useState('');
     useEffect(()=>{
         const checkToken = localStorage.getItem("token")
         if (checkToken){
             setToken(checkToken)
         }
     },[])
-    const login =(token)=>{
+    const login =(token, name)=>{
         setToken(token)
         localStorage.setItem("token", token);
     }

@@ -22,7 +22,7 @@ export const register = async (req, res) => {
         } else{
             const hashedPassword = await bcrypt.hash(password, saltRounds);
             const newUser = await createUser(name, email, hashedPassword);
-            const token = jwt.sign({ userid: newUser.userid }, JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ userid: newUser.userid}, JWT_SECRET, { expiresIn: '2h' });
             res.status(201).json({ message: 'User created successfully', token });
         }
         

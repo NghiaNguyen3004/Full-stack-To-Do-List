@@ -22,8 +22,8 @@ export const login = async (req, res) => {
                 if (!passwordMatch){
                     return res.status(401).json({error: 'Incorrect password'});
                 } else{
-                    const token = jwt.sign({ userid: getUser.userid }, JWT_SECRET, { expiresIn: '1h' });
-                    res.status(200).json({ message: 'Login successful', token });
+                    const token = jwt.sign({ userid: getUser.userid }, JWT_SECRET, { expiresIn: '2h' });
+                    res.status(200).json({ message: 'Login successful', token});
                 }
             }
         }

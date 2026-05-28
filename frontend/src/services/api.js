@@ -43,6 +43,20 @@ export const getAllTodos = async(token) =>{
     return await allTodosRes.json();
 };
 
+export const getAllCompletedTodos = async(token) =>{
+    const allCompletedTodosRes = await fetch (`${SERVER_URL}/todos/completed`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (!allCompletedTodosRes.ok) {
+        throw new Error('Failed to fetch completed todos');
+    }
+    return await allCompletedTodosRes.json();
+}
+
 export const createTodo = async (title, token) => {
     const createTodoRes = await fetch(`${SERVER_URL}/todos`, {
         method: 'POST',
@@ -73,8 +87,10 @@ export const updateTodoTitle = async (id, newTitle, token) => {
     return await updatedTitleRes.json();
 }
 
-export const toggleTodoCompletion = async (id, token) => {
-    const toggleCompletionRes = await fetch(`${SERVER_URL}/todos/complete/${id}`, {
+export const completeTodo = async (id, token) => {
+    console.log('completing todo with id:', id)
+    console.log('token:', token)
+    const toggleCompletionRes = await fetch(`${SERVER_URL}/todos/completed/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -82,10 +98,24 @@ export const toggleTodoCompletion = async (id, token) => {
         }
     });
     if (!toggleCompletionRes.ok) {
-        throw new Error('Failed to toggle todo completion');
+        throw new Error('Failed to complete todo');
     }
     return await toggleCompletionRes.json();
 
+}
+
+export const unCompleteTodo = async(id, token)=>{
+    const unCompleteRes = await fetch(`${SERVER_URL}/todos/uncompleted/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (!unCompleteRes.ok) {
+        throw new Error('Failed to uncomplete todo');
+    }
+    return await unCompleteRes.json();
 }
 
 export const deleteTodo = async (id, token) =>{
@@ -99,4 +129,5 @@ export const deleteTodo = async (id, token) =>{
     if (!deleteTodoRes.ok) {
         throw new Error('Failed to delete todo');
     }
+    return await deleteTodoRes.json();
 }
