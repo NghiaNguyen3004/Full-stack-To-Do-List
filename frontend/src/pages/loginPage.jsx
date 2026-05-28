@@ -7,19 +7,10 @@ import { LoginForm } from '../components/loginForm.jsx'
 
 const LoginPage = () => {
     const {login} = useAuth()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
 
-    const handleEmailInput =(e)=>{
-        setEmail(e.target.value)
-    }
-
-    const handlePassword = (e)=>{
-        setPassword(e.target.value)
-    }
 
     const handleSubmit = async (email, password) =>{
         setLoading(true)

@@ -4,6 +4,7 @@ import {useAuth} from '../context/authContext.jsx';
 import ToDoItem from '../components/todoItem.jsx';
 import CompletedToDoItem from '../components/completedTodoItem.jsx';
 import { FormItem } from '../components/formItem.jsx';
+import {useNavigate} from 'react-router-dom';
 import '../styles/todosPage.css';
 const ToDoPage = ()=>{
     const {token, name} = useAuth();
@@ -12,6 +13,7 @@ const ToDoPage = ()=>{
     const [completedTodos, setCompletedTodos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const {logout}  = useAuth();
     useEffect(()=>{
         const fetchToDos = async ()=>{
             try{
@@ -76,6 +78,12 @@ const ToDoPage = ()=>{
         }
     }
 
+    const handleLogout = () =>{
+        // Logic to log out user
+        logout();
+        navigate('/login');
+    }
+
     //The UI of To do page.
     return(
         <div className="todos-page">
@@ -83,7 +91,7 @@ const ToDoPage = ()=>{
                 <span className="navbar-brand">To-do app</span>
                     <div className="navbar-right">
                         <span className="navbar-user">hello, {name}</span>
-                        {/* <button className="logout-btn" onClick={logout}>Logout</button> */}
+                        <button className="logout-btn" onClick={handleLogout}>Logout</button>
                     </div>
             </nav>
 
