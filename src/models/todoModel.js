@@ -31,10 +31,9 @@ export const completedATask = async(id, userid) =>{
     const client = await pool.connect()
     try {
         await client.query('BEGIN')
-        await client.query('UPDATE todos SET completed = true WHERE id = $1 AND user_id = $2 RETURNING *',[id, userid])
-        await client.query('INSERT INTO completedtodo (todoid, user_id, title) SELECT id, user_id, title FROM todos WHERE id = $1 AND user_id = $2',[id, userid])
-        
-        const result = await client.query('DELETE FROM todos WHERE id = $1 AND user_id = $2 RETURNING *',[id, userid] )
+        await client.query('UPDATE todos SET completed = true WHERE id = $1 AND user_id = $2',[id, userid])
+        const result = await client.query('INSERT INTO completedtodo (todoid, user_id, title) SELECT id, user_id, title FROM todos WHERE id = $1 AND user_id = $2 RETURNING *',[id, userid])
+        await client.query('DELETE FROM todos WHERE id = $1 AND user_id = $2',[id, userid] )
         await client.query('COMMIT')
     return result.rows[0]
     } catch(err) {
@@ -60,8 +59,9 @@ export const undoneATask = async(id, userid) =>{
     try {
         await client.query('BEGIN')
     
-        await client.query('INSERT INTO todos (user_id, title) select user_id, title from completedtodo where todoid = $1 and user_id = $2 SET completed = false returning *',[id, userid])
-        const result = await client.query('DELETE FROM completedtodo WHERE todoid = $1 AND user_id = $2 RETURNING *',[id, userid] )
+        const result = await client.query('INSERT INTO todos (user_id, title) select user_id, title from completedtodo where todoid = $1 and user_id = $2 returning *',[id, userid])
+    
+        await client.query('DELETE FROM completedtodo WHERE todoid = $1 AND user_id = $2',[id, userid] )
         await client.query('COMMIT')
     return result.rows[0]
     } catch(err) {
@@ -69,12 +69,6 @@ export const undoneATask = async(id, userid) =>{
         throw err
     } finally {
         client.release()
-    }
-    try{
-        const taskUndone = await pool.query('BEGIN; INSERT INTO todos (user_id, title) select user_id, title from completedtodo where todoid = $1 and user_id = $2 returning *; DELETE FROM completedtodo WHERE todoid = $1 and user_id = $2; COMMIT;', [id, userid]);
-        return (taskUndone.rows[0]);
-    } catch (error){
-        throw error;
     }
 };
 

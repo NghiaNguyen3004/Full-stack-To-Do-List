@@ -54,6 +54,7 @@ const ToDoPage = ()=>{
         // Logic to toggle completion status
         try{
             const completedTodo = await completeTodo(id, token)
+            console.log('completed todo returned:', completedTodo)
             settodos(todos.filter(todo => todo.id !== id))
             setCompletedTodos([...completedTodos, completedTodo])
         } catch(err){
@@ -63,10 +64,12 @@ const ToDoPage = ()=>{
     }
 
     const handleUnComplete = async (id) =>{
+        console.log('uncompleting todo with id:', id)
         try{
             const unCompletedTodo = await unCompleteTodo(id, token);
-            setCompletedTodos(completedTodos.filter(completedtodo => completedtodo.id !== id));
+            setCompletedTodos(completedTodos.filter(completedtodo => completedtodo.todoid !== id));
             settodos([...todos, unCompletedTodo]);
+            console.log('uncompleted todo returned:', unCompletedTodo)
         }
         catch(err){
             setError('Failed to uncomplete ToDo');
@@ -108,13 +111,18 @@ const ToDoPage = ()=>{
         </div>
 
         {activeTab === 'active' && (
-            <ul className="todos-list">
-                {todos.map(todo => (
-                <ToDoItem key={todo.id} todo={todo} onComplete={handleComplete} onDelete={handleDelete} />
-                ))}
-            </ul>
+            <>
+                {loading && <p className="todos-loading">Fetching tasks...</p>}
+                {error && <p className="todos-error">{error}</p>}
+                {todos.length === 0 && !loading && <p className="todos-empty">No tasks yet — add one above</p>}
+                <ul className="todos-list">
+                    {todos.map(todo => (
+                    <ToDoItem key={todo.id} todo={todo} onComplete={handleComplete} onDelete={handleDelete} />
+                    ))}
+                </ul>
+            </>
         )}
-
+        
         {activeTab === 'completed' && (
             <ul className="completed-list">
                 {completedTodos.map(completedtodo => (
@@ -123,9 +131,7 @@ const ToDoPage = ()=>{
             </ul>
         )}
 
-        {loading && <p className="todos-loading">Fetching tasks...</p>}
-        {error && <p className="todos-error">{error}</p>}
-        {todos.length === 0 && !loading && <p className="todos-empty">No tasks yet — add one above</p>}
+        
     
         </div>
     )

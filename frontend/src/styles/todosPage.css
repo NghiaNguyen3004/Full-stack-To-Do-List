@@ -300,6 +300,16 @@
   transform: rotate(-45deg) translateY(-1px);
 }
 
+.todo-item.completing {
+  animation: completeOut 0.4s ease forwards;
+}
+
+@keyframes completeOut {
+  0%   { opacity: 1; transform: translateX(0); }
+  50%  { opacity: 0.5; transform: translateX(8px); }
+  100% { opacity: 0; transform: translateX(16px); }
+}
+
 .todo-title {
   flex: 1;
   font-size: 14px;
@@ -433,6 +443,16 @@
 .completed-item:hover {
   opacity: 0.8;
   border-color: var(--border);
+}
+
+.completed-item.completing {
+  animation: completeOut 0.4s ease forwards;
+}
+
+@keyframes completeOut {
+  0%   { opacity: 1; transform: translateX(0); }
+  50%  { opacity: 0.5; transform: translateX(8px); }
+  100% { opacity: 0; transform: translateX(16px); }
 }
 
 .completed-icon {

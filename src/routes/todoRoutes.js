@@ -7,8 +7,9 @@ todoRouter.get('/completed', requireAuth, getAllCompletedTodosController);
 todoRouter.get('/', requireAuth, getAllTodosController);
 todoRouter.post('/', requireAuth, createATodoController);
 todoRouter.put('/completed/:id', requireAuth, completedATaskController);
-todoRouter.put('/:id', requireAuth, changingTheTitleController);
 todoRouter.patch('/uncompleted/:id', requireAuth, undoneATaskController);
+todoRouter.put('/:id', requireAuth, changingTheTitleController);
+
 todoRouter.delete('/:id', requireAuth, deleteATaskController);
 
 

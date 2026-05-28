@@ -1,5 +1,5 @@
 
-import { getAllTodos, getAllCompletedTodos, createATodo, changingTheTitle, completedATask, deleteATask } from '../models/todoModel.js';
+import { getAllTodos, getAllCompletedTodos, createATodo, changingTheTitle, completedATask, deleteATask, undoneATask} from '../models/todoModel.js';
 
 export const getAllTodosController = async (req, res) => {
     const userID = req.userid;
