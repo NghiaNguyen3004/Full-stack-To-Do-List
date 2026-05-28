@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const authFetch = async(URL, options) => {
     const response = await fetch(URL, options);
