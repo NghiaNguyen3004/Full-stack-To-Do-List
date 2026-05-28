@@ -11,10 +11,9 @@ import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const FRONTEND_URL = process.env.FRONTEND_URL; // Replace with your frontend URL
 
 app.use(cors({
-    origin: [FRONTEND_URL, 'http://localhost:5173'], // Allow requests from the frontend URL and localhost for development
+    origin: ['full-stack-to-do-list-delta.vercel.app', 'http://localhost:5173'], // Allow requests from the frontend URL and localhost for development
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true, // Allow cookies to be sent with requests
 }));
