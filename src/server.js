@@ -5,6 +5,13 @@ import todoRouter from './routes/todoRoutes.js';
 import { requireAuth } from './middleware/authMiddle.js';
 import cors from 'cors';
 
+const requiredEnvVars = ['DATABASE_URL', 'JWT_SECRET'];
+const missingEnvVars = requiredEnvVars.filter((name) => !process.env[name]);
+
+if (missingEnvVars.length > 0) {
+    throw new Error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
