@@ -14,7 +14,7 @@ export const registerUser = async (name, email, password) => {
     const registerResponse = await authFetch(`${SERVER_URL}/auth/register`, {
         method: 'POST',
         headers: {
-        'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({name, email, password})
         });
