@@ -1,4 +1,4 @@
-const SERVER_URL = ''|| 'http://localhost:3000';
+const SERVER_URL = '';
 
 const authFetch = async(URL, options) => {
     const response = await fetch(URL, options);
