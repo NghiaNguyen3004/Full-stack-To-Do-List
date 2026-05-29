@@ -1,4 +1,4 @@
-const SERVER_URL = '';
+const SERVER_URL = import.meta.env.VITE_BACKEND_HOST || 'http://localhost:3000';
 
 const authFetch = async(URL, options) => {
     const response = await fetch(URL, options);
