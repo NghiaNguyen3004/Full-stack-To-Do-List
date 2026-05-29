@@ -12,9 +12,10 @@ const __dirname = path.dirname(__filename)
 
 const app = express();
 
-if (process.env.NODE_ENV !== 'production') {
-    app.use(cors({ origin: 'http://localhost:5173' }))
-}
+app.use(cors({
+    origin: ['http://localhost:5173', 'https://frontend-production-326b.up.railway.app'], // Adjust this to match your frontend URL and port
+    credentials: true, // Allow cookies to be sent with requests
+}));
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use('/auth', router);
