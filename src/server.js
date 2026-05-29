@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename)
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://frontend-production-326b.up.railway.app'], // Adjust this to match your frontend URL and port
+    origin: ['http://localhost:5173', 'https://full-stack-to-do-list-delta.vercel.app/'], // Adjust this to match your frontend URL and port
     credentials: true, // Allow cookies to be sent with requests
 }));
 const PORT = process.env.PORT || 3000;
