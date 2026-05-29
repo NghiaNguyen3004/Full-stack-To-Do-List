@@ -33,6 +33,7 @@ export const loginUser = async (email, password) => {
         body: JSON.stringify({email, password})
 
     });
+    console.log('Server URL:', SERVER_URL);
     if (!loginResponse.ok) {
         throw new Error('Failed to login user');
     }
