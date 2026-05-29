@@ -20,6 +20,12 @@ app.use(express.json());
 app.use('/auth', router);
 app.use('/todos', todoRouter);
 
+
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.path}`)
+    next()
+})
+
 app.get('/health', (req, res) => {
     res.json({ status: 'OK' });
 });
