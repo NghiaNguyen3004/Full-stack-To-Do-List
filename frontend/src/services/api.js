@@ -1,6 +1,6 @@
 const SERVER_URL = import.meta.env.VITE_BACKEND_HOST || 'http://localhost:3000';
 
-const authFetch = async(URL, options) => {
+const authFetch = async(URL, options = {}) => {
     const response = await fetch(URL, options);
     if (response.status === 401) {
         localStorage.removeItem('token');
@@ -11,7 +11,7 @@ const authFetch = async(URL, options) => {
 }
 
 export const registerUser = async (name, email, password) => {
-    const registerResponse = await authFetch(`${SERVER_URL}/auth/register`, {
+    const registerResponse = await fetch(`${SERVER_URL}/auth/register`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export const registerUser = async (name, email, password) => {
 };
 
 export const loginUser = async (email, password) => {
-    const loginResponse = await authFetch(`${SERVER_URL}/auth/login`, {
+    const loginResponse = await fetch(`${SERVER_URL}/auth/login`, {
         method:'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const loginUser = async (email, password) => {
 };
 
 export const getAllTodos = async(token) =>{
-    const allTodosRes = await authFetch (`${SERVER_URL}/todos`, {
+    const allTodosRes = await fetch (`${SERVER_URL}/todos`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export const getAllTodos = async(token) =>{
 };
 
 export const getAllCompletedTodos = async(token) =>{
-    const allCompletedTodosRes = await authFetch (`${SERVER_URL}/todos/completed`, {
+    const allCompletedTodosRes = await fetch (`${SERVER_URL}/todos/completed`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export const getAllCompletedTodos = async(token) =>{
 }
 
 export const createTodo = async (title, token) => {
-    const createTodoRes = await authFetch(`${SERVER_URL}/todos`, {
+    const createTodoRes = await fetch(`${SERVER_URL}/todos`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export const createTodo = async (title, token) => {
 };
 
 export const updateTodoTitle = async (id, newTitle, token) => {
-    const updatedTitleRes = await authFetch(`${SERVER_URL}/todos/${id}`, {
+    const updatedTitleRes = await fetch(`${SERVER_URL}/todos/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export const updateTodoTitle = async (id, newTitle, token) => {
 export const completeTodo = async (id, token) => {
     console.log('completing todo with id:', id)
     console.log('token:', token)
-    const toggleCompletionRes = await authFetch(`${SERVER_URL}/todos/completed/${id}`, {
+    const toggleCompletionRes = await fetch(`${SERVER_URL}/todos/completed/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export const completeTodo = async (id, token) => {
 }
 
 export const unCompleteTodo = async(id, token)=>{
-    const unCompleteRes = await authFetch(`${SERVER_URL}/todos/uncompleted/${id}`, {
+    const unCompleteRes = await fetch(`${SERVER_URL}/todos/uncompleted/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ export const unCompleteTodo = async(id, token)=>{
 }
 
 export const deleteTodo = async (id, token) =>{
-    const deleteTodoRes = await authFetch(`${SERVER_URL}/todos/${id}`, {
+    const deleteTodoRes = await fetch(`${SERVER_URL}/todos/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
